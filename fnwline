@@ -1,0 +1,13 @@
+#!/bin/bash
+
+subject=""
+find ./ -type f -print | xargs tail -c 1 | while read line; do 
+  if [ "${line:0:3}"  = "==>" ]; then 
+    subject=${line} 
+  else 
+    str=$(echo ${line} | xxd -p)
+    if [ ! "${str}" = "0a" ]; then
+      echo "${subject}"
+    fi
+  fi
+done
